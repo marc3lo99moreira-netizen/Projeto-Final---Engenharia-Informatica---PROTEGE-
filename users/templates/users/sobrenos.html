@@ -1,0 +1,87 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protege+ | {% trans "Sobre Nós" %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,900&family=Instrument+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'users/css/sobrenos.css' %}">
+</head>
+<body class="{% if user.is_authenticated %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% endif %}" data-authenticated="{{ user.is_authenticated|lower }}">
+
+    <header class="header-main">
+        <div class="header-pill">
+            <a href="{% url 'home' %}" class="brand">
+                <div class="brand-icon">🛡️</div>
+                <span class="brand-name">Protege+</span>
+            </a>
+            <nav class="nav-menu">
+                {% if not user.is_authenticated %}
+                <div class="auth-buttons">
+                    <a href="{% url 'login' %}" class="btn-registar">{% trans "Entrar" %}</a>
+                    <a href="{% url 'registar' %}" class="btn-registar">{% trans "Registar" %}</a>
+                    <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← Voltar</a>
+                </div>
+                {% else %}
+                <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← Voltar</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="content-grid">
+                <div class="about-text">
+                <h1 class="serif-title">{% trans "Educação e" %} <br> {% trans "Segurança Digital" %}</h1>
+                <p>
+                    O <strong>Protege+</strong> é uma plataforma dedicada a capacitar estudantes e cidadãos a navegarem no mundo digital com confiança. O nosso objetivo é desmistificar a cibersegurança através de simuladores práticos e quizzes interativos.
+                </p>
+                <ul class="info-list">
+                    <li>🛡️ Prevenção contra Phishing</li>
+                    <li>🔑 Gestão segura de credenciais</li>
+                    <li>🧠 Literacia digital avançada</li>
+                </ul>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-inner">
+                    {% if user.is_authenticated %}
+                            <h2>{% trans "Envia uma mensagem" %}</h2>
+                        <form action="{% url 'sobrenos' %}" method="POST" id="mensagem-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Assunto" %}</label>
+                                <input type="text" name="assunto" required placeholder="{% trans "Ex: Dúvida no simulador" %}" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">{% trans "Mensagem" %}</label>
+                                <textarea name="mensagem" rows="3" required placeholder="{% trans "Como podemos ajudar?" %}" class="form-textarea"></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">{% trans "Enviar agora" %}</button>
+                        </form>
+                    {% else %}
+                        <div class="locked-content">
+                            <span class="lock-icon">🔒</span>
+                            <h2>{% trans "Tens alguma dúvida?" %}</h2>
+                            <p>{% trans "Para nos enviares uma mensagem e obteres suporte personalizado, precisas de ter sessão iniciada." %}</p>
+                            <a href="{% url 'login' %}" class="btn-login-alt">{% trans "Iniciar Sessão" %}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer-main">
+        <div class="email-pill">
+            <span class="icon">✉️</span>
+            <span class="text">ajuda@protegemais.pt</span>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registo | Protege+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'users/css/registar.css' %}">
+    
+</head>
+<body data-authenticated="{{ user.is_authenticated|lower }}">
+
+    <div class="login-left">
+        <a href="{% url 'home' %}" class="brand-group">
+            <div class="brand-icon">🛡️</div>
+            <span class="brand-name">Protege+</span>
+        </a>
+        <div style="display: flex; justify-content: center;">
+            <img src="{% static 'users/images/avatar_perfil.png' %}" alt="Avatar" class="avatar-img">
+        </div>
+        <div></div>
+    </div>
+
+    <div class="login-right">
+        <a href="{% url 'login' %}" class="back-arrow">←</a>
+
+        <div class="form-container">
+            <h2 class="registo-title">{% trans "Regista-te e experimenta!" %}</h2>
+
+            <div class="stepper-container">
+                <div id="dot1" class="step-dot active"></div>
+                <div id="line1" class="step-line"></div>
+                <div id="dot2" class="step-dot"></div>
+                <div id="line2" class="step-line"></div>
+                <div id="dot3" class="step-dot"></div>
+            </div>
+
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="msg-erro">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" id="registoForm">
+                {% csrf_token %}
+
+                <div id="step1">
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Email:" %}</label>
+                        <input type="email" name="email" required placeholder="Endereço de email" class="input-protege">
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Nome da instituição:" %}</label>
+                        <input type="text" name="instituicao" required placeholder="Nome da tua escola" class="input-protege">
+                    </div>
+                    <button type="button" onclick="goToStep(2)" class="btn-full">Seguinte</button>
+                </div>
+
+                <div id="step2" class="hidden">
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Idade:" %}</label>
+                        <input type="number" name="idade" required placeholder="Tua idade" class="input-protege">
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Ano letivo:" %}</label>
+                        <input type="text" name="ano_letivo" required placeholder="Ex: 10º Ano" class="input-protege">
+                    </div>
+                    <div class="btn-flex">
+                        <button type="button" onclick="goToStep(1)" class="btn-voltar">{% trans "Voltar" %}</button>
+                        <button type="button" onclick="goToStep(3)" class="btn-full" style="width: 66.66%;">{% trans "Seguinte" %}</button>
+                    </div>
+                </div>
+
+                <div id="step3" class="hidden">
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Nome de utilizador:" %}</label>
+                        <input type="text" name="username" required placeholder="Como te queres chamar?" class="input-protege">
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Palavra-passe:" %}</label>
+                        <input type="password" name="password" required placeholder="Cria uma senha" class="input-protege">
+                    </div>
+                    <div class="input-group">
+                        <label class="form-label">{% trans "Repetir palavra-passe:" %}</label>
+                        <input type="password" name="confirm_password" required placeholder="Repete a senha" class="input-protege">
+                    </div>
+                    <div class="btn-flex">
+                        <button type="button" onclick="goToStep(2)" class="btn-voltar">{% trans "Voltar" %}</button>
+                        <button type="submit" class="btn-full" style="width: 66.66%">{% trans "Finalizar" %}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>

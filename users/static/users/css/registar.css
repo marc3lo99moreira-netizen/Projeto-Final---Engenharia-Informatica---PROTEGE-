@@ -1,0 +1,128 @@
+:root {
+            --r-bg-soft: #C2E0B1;
+            --r-text-dark: #254d1a;
+            --r-accent: #20c214;
+            --r-pure-white: #ffffff;
+            --r-panel-green: #76A361;
+            --r-glass-input: rgba(255, 255, 255, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            transition: filter 0.3s ease;
+        }
+
+        /* dIVISAO */
+        .login-left {
+            display: none;
+            width: 41.66%;
+            background-color: var(--r-bg-soft);
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 3rem;
+        }
+
+        @media (min-width: 1024px) {
+            .login-left { display: flex; }
+        }
+
+        .login-right {
+            width: 100%;
+            background-color: var(--r-panel-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        @media (min-width: 1024px) {
+            .login-right { width: 58.33%; }
+        }
+
+        .brand-group { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+        .brand-icon { 
+            width: 2.5rem; height: 2.5rem; 
+            background: rgba(0,0,0,0.15); 
+            border-radius: 0.5rem; 
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; 
+        }
+        .brand-name { color: var(--r-accent); font-weight: 900; font-style: italic; font-size: 1.5rem; }
+        .avatar-img { width: 18rem; height: 18rem; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05)); }
+
+        /*NAVEGAÇÃO */
+        .back-arrow {
+            position: absolute; top: 2.5rem; left: 2.5rem;
+            text-decoration: none; color: var(--r-text-dark);
+            font-size: 1.875rem; transition: transform 0.2s;
+        }
+        .back-arrow:hover { transform: scale(1.1) translateX(-5px); }
+
+        .stepper-container {
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 2.5rem; gap: 8px;
+        }
+        .step-dot {
+            width: 12px; height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%; transition: 0.3s;
+        }
+        .step-dot.active { background: white; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .step-line { width: 30px; height: 2px; background: rgba(255, 255, 255, 0.2); }
+
+        /*FORMULÁRIO*/
+        .form-container { width: 100%; max-width: 28rem; }
+        .registo-title {
+            font-size: 2.1rem; font-weight: 900; font-style: italic;
+            color: var(--r-text-dark); text-align: center; margin-bottom: 1.5rem;
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        .form-label {
+            display: block; color: white; font-weight: 700;
+            font-style: italic; font-size: 1rem; margin-bottom: 0.5rem;
+        }
+
+        .input-protege {
+            width: 100%; background-color: var(--r-glass-input);
+            border: 2px solid transparent; border-radius: 1.5rem;
+            padding: 1rem 1.5rem; color: white; outline: none;
+            font-size: 1rem; transition: 0.3s;
+        }
+        .input-protege::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .input-protege:focus { background-color: rgba(255, 255, 255, 0.3); border-color: white; }
+
+        /*BOTÕES*/
+        .btn-full {
+            width: 100%; background-color: var(--r-text-dark);
+            color: white; padding: 1rem; border: none;
+            border-radius: 1.5rem; font-weight: 900; font-style: italic;
+            font-size: 1.1rem; text-transform: uppercase; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.2s;
+        }
+        .btn-full:hover { transform: translateY(-2px); filter: brightness(1.2); }
+
+        .btn-flex { display: flex; gap: 10px; margin-top: 1rem; }
+        .btn-voltar {
+            width: 33.33%; background: rgba(255,255,255,0.15);
+            color: white; border: none; border-radius: 1.5rem;
+            font-weight: 700; font-style: italic; cursor: pointer;
+        }
+
+        .msg-erro {
+            color: #7f1d1d; background-color: #fca5a5;
+            padding: 0.75rem; border-radius: 0.75rem;
+            margin-bottom: 1rem; font-size: 0.9rem; font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        /* FILTROS ACESSIBILIDADE */
+        .protanopia { filter: saturate(0.5) hue-rotate(-20deg); }
+        .deuteranopia { filter: saturate(0.5) hue-rotate(-45deg); }
+        .tritanopia { filter: hue-rotate(180deg); }
+        .achromatopsia { filter: grayscale(1); }

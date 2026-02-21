@@ -1,0 +1,26 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <link rel="stylesheet" href="{% static 'users/css/login.css' %}"> <title>{% trans "Editar Perfil" %} | Protege+</title>
+</head>
+<body class="view-autenticacao">
+    <main class="ala-principal-direita" style="width: 100%;">
+        <div class="modulo-login">
+            <h2 class="cabecalho-form">{% trans "Editar Dados" %}</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="agrupamento-input">
+                        <label class="etiqueta-input">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="botao-acao-principal">{% trans "Guardar Alterações" %}</button>
+                <a href="{% url 'perfil' %}" style="display: block; text-align: center; margin-top: 15px; color: white;">{% trans "Cancelar" %}</a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
