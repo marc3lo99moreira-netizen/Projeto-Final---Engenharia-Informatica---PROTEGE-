@@ -59,3 +59,22 @@ class HistoricoQuiz(models.Model):
 
     def __str__(self): 
         return f"Resposta de {self.resultado_quiz.perfil.user.username} à pergunta {self.pergunta.id} - {'Correta' if self.foi_correta else 'Errada'}"
+
+
+class emails(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    assunto =models.CharField(max_length=255)
+    remetente = models.EmailField()
+    corpo = models.TextField()
+    nivel_dificuldade = models.IntegerField()
+    explicacao = models.TextField()
+    e_phishing = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Email {self.id}: {self.assunto[:30]}"
+    
+
+class palavras_clicaveis(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    email = models.ForeignKey(emails, on_delete = models.CASCADE, related_name='email')
+    

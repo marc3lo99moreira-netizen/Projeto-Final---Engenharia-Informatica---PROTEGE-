@@ -101,15 +101,30 @@
             </div>
             
             <h2 class="popup-title">
-                {% if esta_correto %} {% trans "Boa! Estás no caminho certo." %} {% else %} {% trans "Ops! Não foi desta." %} {% endif %}
+                {% if esta_correto %} 
+                    {% trans "Boa! Estás no caminho certo." %} 
+                {% else %} 
+                    {% trans "Ops! Não foi desta." %} 
+                {% endif %}
             </h2>
             
             <p class="popup-text">{{ explicacao }}</p>
 
+            <div class="ler-mais-container">
+                <a href="{% url 'atividades:sabermais' %}#phishing" target="_blank" class="ler-mais-link">
+                    {% trans "Ler mais!" %}
+                </a>
+            </div>
+
             <a href="{% url 'atividades:proximo_passo' %}" class="btn-continue">
-                {% if numero == 7 %} {% trans "Ver Resultado Final" %} {% else %} {% trans "Continuar" %} {% endif %}</a>
+                {% if numero == 7 %} 
+                    {% trans "Ver Resultado Final" %} 
+                {% else %} 
+                    {% trans "Continuar" %} 
+                {% endif %}
+            </a>
         </div>
     </div>
-    {% endif %}
+{% endif %}
 </body>
 </html>

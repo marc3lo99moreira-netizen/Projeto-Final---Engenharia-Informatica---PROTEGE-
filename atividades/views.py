@@ -24,7 +24,6 @@ def home2(request):
     return render(request, 'atividades/home2.html')
 
 
-
 @login_required
 @require_http_methods(["POST"])
 def atualizar_filtros_acessibilidade(request):
@@ -249,8 +248,11 @@ def detalhe_historico(request, resultado_id):
     })
 
 
-
-def simulador(request):    
+@login_required
+def simulador(request):
+    lang = request.session.get('django_language' , 'pt')
+    translation.activate(lang)
+ 
     return render(request, 'atividades/simulador.html')
 
 
@@ -291,3 +293,7 @@ def mudar_lingua(request, lang_code):
         return response
 
     return redirect(request.META.get('HTTP_REFERER', 'atividades:home2'))
+7
+
+def sabermais(request):
+    return render(request, 'atividades/sabermais.html')

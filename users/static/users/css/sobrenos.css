@@ -263,7 +263,7 @@
         }
 
         .about-text p {
-            max-width: 100%; /* Permite que o texto ocupe a largura total */
+            max-width: 100%; 
             margin: 0 auto;
         }
 
@@ -351,7 +351,7 @@
             transform: scale(1.05);
         }
 
-        /* 7. MENSAGENS DO DJANGO */
+        /* MENSAGENS DO DJANGO */
         .messages-container {
             display: flex;
             flex-direction: column;
@@ -395,7 +395,7 @@
             }
         }
 
-        /* 8. PROTEÇÃO: Esconder formulário se não autenticado */
+        /*Esconder formulário se não autenticado */
         body[data-authenticated="false"] .contact-inner form,
         body[data-authenticated="false"] .form-group,
         body[data-authenticated="false"] input[name="assunto"],
@@ -407,7 +407,7 @@
             pointer-events: none !important;
         }
 
-        /* 9. BOTÃO VOLTAR */
+        /*BOTÃO VOLTAR */
         .btn-voltar {
             background-color: rgba(28, 136, 20, 0.3) !important;
             border: 2px solid var(--verde-brilhante) !important;
@@ -421,3 +421,50 @@
             background-color: var(--verde-brilhante) !important;
             color: #fff !important;
         }
+
+        .overlay {
+            position: fixed; 
+            inset: 0; 
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            padding: 1.5rem;
+            pointer-events: auto;
+        }
+
+        .popup-card {
+            background: white;
+            border-radius: 40px;
+            padding: 2.5rem;
+            max-width: 26rem;
+            width: 100%;
+            text-align: center;
+            border-width: 6px;
+            border-style: solid;
+            box-shadow: 0 30px 60px var(--sombra-forte);
+            animation: popupEntrada 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @keyframes popupEntrada {
+            from { transform: translateY(30px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .popup-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+        .btn-continue {
+            display: block; width: 100%; padding: 1.2rem;
+            background: var(--verde-escuro); color: white;
+            border-radius: 9999px; text-decoration: none;
+            font-weight: 900; font-style: italic; text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .btn-continue:hover { transform: scale(1.05); background: var(--bright-green); }

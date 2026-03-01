@@ -31,11 +31,12 @@ class Perfil(models.Model):
     nivel_quiz = models.IntegerField(default=1)
     quizzes_realizados = models.PositiveIntegerField(default=0)
     soma_percentagens = models.FloatField(default=0.0)
-
     pontuacao_total_quiz = models.IntegerField(default=0)
+
     nivel_simulador = models.IntegerField(default=1)
     simuladores_realizados = models.PositiveIntegerField(default=0)
     pontuacao_total_simulador = models.IntegerField(default=0)
+    
     filtro_daltonismo = models.CharField(max_length=20, choices=OPCOES_DALTONISMO, default='normal')
     filtro_contraste = models.CharField(max_length=20, choices=CONTRASTE_CHOICES, default='normal')
     lingua = models.CharField(max_length=20, choices=LINGUA_CHOICES, default='pt')

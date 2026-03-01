@@ -22,10 +22,10 @@
                 <div class="auth-buttons">
                     <a href="{% url 'login' %}" class="btn-registar">{% trans "Entrar" %}</a>
                     <a href="{% url 'registar' %}" class="btn-registar">{% trans "Registar" %}</a>
-                    <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← Voltar</a>
+                    <a href="javascript:history.go(-1)«" class="nav-link btn-voltar">← Voltar</a>
                 </div>
                 {% else %}
-                <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← Voltar</a>
+                <a href={% url 'atividades:home2' %} class="nav-link btn-voltar">← Voltar</a>
                 {% endif %}
             </nav>
         </div>
@@ -47,6 +47,16 @@
 
             <div class="contact-card">
                 <div class="contact-inner">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {%  if 'sobrenos' in message.tags %}
+                                <div class ="alert alert-{{message.tags}}">
+                                    {{message}}
+                                </div>
+                           {%endif%}
+                        {%endfor%}
+                    {%endif%} 
+
                     {% if user.is_authenticated %}
                             <h2>{% trans "Envia uma mensagem" %}</h2>
                         <form action="{% url 'sobrenos' %}" method="POST" id="mensagem-form">
@@ -74,6 +84,20 @@
 
         </div>
     </main>
+
+    
+    {% if popup %}
+    <div class="overlay">
+        <div class="popup-card">
+            <div class="popup-icon">
+                {% trans "Mensagem Enviada com Sucesso!" %}
+            </div>
+            <a href= {% url 'sobrenos'%} class = "btn-continue">
+                {% trans "Fechar" %}
+            </a>
+        </div>
+    </div>
+    {% endif %}
 
     <footer class="footer-main">
         <div class="email-pill">

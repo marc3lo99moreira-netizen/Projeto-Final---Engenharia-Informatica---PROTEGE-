@@ -1,0 +1,40 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans "Revisão do Quiz" %} | Protege+</title>
+    <link rel="stylesheet" href="{% static 'atividades/css/historico.css' %}">
+</head>
+<body class="hist-view {% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% else %}normal normal{% endif %}" data-authenticated="{{ user.is_authenticated|lower }}">
+    <header class="hist-header">
+        <a href="{% url 'atividades:historico' %}" class="btn-voltar">← {% trans "Voltar ao Histórico" %}</a>
+        <h1 class="hist-titulo">{% trans "Revisão do Quiz" %}</h1>
+    </header>
+
+    <main class="hist-container">
+        <div class="hist-grid">
+            {% for item in respostas %}
+            <div class="hist-card {% if item.foi_correta %}border-correto{% else %}border-errado{% endif %}">
+                <div class="hist-card-topo">
+                    <span class="hist-tag">{% trans "Pergunta" %} {{ forloop.counter }}</span>
+                    <span class="hist-icon">{% if item.foi_correta %}✅ {% trans "Correta" %}{% else %}❌ {% trans "Errada" %}{% endif %}</span>
+                </div>
+                
+                <p class="detalhe-pergunta"><strong>{{ item.pergunta.pergunta }}</strong></p>
+                
+                <div class="detalhe-info">
+                    <p><strong>{% trans "A tua escolha:" %}</strong> <span class="badge-escolha">{{ item.texto_escolha.texto }}</span></p>
+                    <p><strong>{% trans "Resposta certa:" %}</strong> <span class="badge-certa">{{ item.texto_correta.texto }}</span></p>
+                </div>
+
+                <div class="explicacao-box">
+                    <p><em>{{ item.pergunta.explicacao }}</em></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

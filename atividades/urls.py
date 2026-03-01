@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+
+from django.views.i18n import JavaScriptCatalog
+
 app_name = 'atividades'
 urlpatterns = [
     path('home2/', views.home2, name='home2'),
@@ -14,4 +17,6 @@ urlpatterns = [
     path('api/atualizar-filtros/', views.atualizar_filtros_acessibilidade, name='atualizar_filtros'),
     path('guia_emergencia/', views.guia_emergencia, name='guia_emergencia'),
     path('mudar_lingua/<str:lang_code>/', views.mudar_lingua, name='mudar_lingua'),
+    path('sabermais/', views.sabermais, name='sabermais'),
+    
 ]

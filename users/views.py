@@ -98,6 +98,8 @@ def registar(request):
 
 def sobrenos(request):
 
+    popup = False
+
     #quando o utilizdor entre na sobre nos o metodo e get e ignora o if, so entra no if quando ele carrega no enviar mensagem
     if request.method == 'POST':
         
@@ -116,21 +118,25 @@ def sobrenos(request):
         
         #para nao escrever muito
         if len(assunto) > 200 or len(mensagem_texto) > 5000:
-            messages.error(request, "Mensagem muito longa. Reduz o tamanho.")
+            messages.error(request, "Mensagem muito longa. Reduz o tamanho.", extra_tags = 'sobrenos')
             return render(request, 'users/sobrenos.html')
         
 
         #para mandar para a bd
         try:
-            Mensagem.objects.create(
+            Mensagem.objects.create(    
                 user=request.user,
                 assunto=assunto,
                 mensagem=mensagem_texto
             )
-            messages.success(request, "✅ Mensagem enviada com sucesso! Obrigado pelo feedback.")
-            return redirect('atividades:home2')
+            messages.success(request, "Mensagem enviada com sucesso! Obrigado pelo feedback. ")
+            popup = True
+            return render(request, 'users/sobrenos.html',{
+                'popup' : popup
+            })
+    
         except Exception as e:
-            messages.error(request, "❌ Ocorreu um erro ao enviar a mensagem. Tente novamente.")
+            messages.error(request,  "Ocorreu um erro ao enviar a mensagem. Tente novamente.")
             return render(request, 'users/sobrenos.html')
     
     return render(request, 'users/sobrenos.html')

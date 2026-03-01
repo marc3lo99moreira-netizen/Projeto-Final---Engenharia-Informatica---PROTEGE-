@@ -293,3 +293,25 @@ body {
 .tritanopia { filter: hue-rotate(180deg); }
 .achromatopsia { filter: grayscale(1); }
 .alto-contraste { filter: contrast(180%); }
+
+
+.ler-mais-container {
+    margin: 10px 0 20px 0;
+}
+
+.ler-mais-link {
+    color: #2e7d32; 
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.ler-mais-link:hover {
+    color: #1b3211; 
+}
+
+.popup-text {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
