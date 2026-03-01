@@ -35,6 +35,7 @@
                     <a href="{% url 'sobrenos' %}" class="nav-link-text">{% trans "Sobre Nós" %}</a>
                     
                     <div class="auth-buttons">
+                        <a href="{% url 'atividades:sabermais' %}" class="btn-dashboard">{% trans "Quero Aprender!" %}</a>
                         <a href="{% url 'atividades:quiz' %}" class="btn-dashboard">{% trans "QUIZ" %}</a>
                         <a href="{% url 'atividades:simulador' %}" class="btn-dashboard">{% trans "SIMULADOR" %}</a>
                     </div>
@@ -45,8 +46,23 @@
                 <button id="btn-avatar-trigger" type="button" class="btn-avatar-trigger">
                     <img src="{% static 'atividades/images/avatar_perfil.png' %}" alt="{% trans "QUIZ" %}">
                 </button>
-
+                
+                {%if user.is_superuser%}
                 <div id="perfil-menu" class="dropdown-menu hidden">
+                    <div class="dropdown-header">
+                        <p class="dropdown-label">{% trans "UTILIZADOR" %}</p>
+                        <h3 class="dropdown-username">{{ user.username }}</h3>
+                    </div>
+                    <ul class="dropdown-list">
+                        <li><a href="{% url 'perfil' %}" class="dropdown-item">👤 {% trans "Ver Perfil" %}</a></li>
+                        <li><a href="{% url 'atividades:historico' %}" class="dropdown-item">📜 {% trans "Histórico" %}</a></li>
+                        <li><a href="{% url 'admin:index' %}" class="dropdown-item">📜 {% trans "Painel Admin" %}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0);" onclick="fazerLogout('{% url 'logout' %}')" class="dropdown-item exit">🚪 {% trans "Terminar Sessão" %}</a></li>
+                    </ul>
+                    </div>
+                    {%else%}
+                    <div id="perfil-menu" class="dropdown-menu hidden">
                     <div class="dropdown-header">
                         <p class="dropdown-label">{% trans "UTILIZADOR" %}</p>
                         <h3 class="dropdown-username">{{ user.username }}</h3>
@@ -57,7 +73,8 @@
                         <li class="divider"></li>
                         <li><a href="javascript:void(0);" onclick="fazerLogout('{% url 'logout' %}')" class="dropdown-item exit">🚪 {% trans "Terminar Sessão" %}</a></li>
                     </ul>
-                </div>
+                    {%endif%}
+
             </div>
         </div>
     </header>
@@ -105,9 +122,11 @@
 
         <div class="accessibility-pill">
             <span class="help-label">{% trans "PRECISAS DE AJUDA?" %}</span>
+           
             <button onclick="toggleDaltonismoMenu()" class="access-icon">
                 <img src="{% static 'users/images/daltonismo.png' %}" style="width:22px;">
             </button>
+            
             <button onclick="toggleContrasteMenu()" class="access-icon">
                 <img src="{% static 'users/images/contraste.png' %}" style="width:22px;">
             </button>

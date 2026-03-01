@@ -14,6 +14,7 @@ class QuizPergunta(models.Model):
     lingua = models.CharField(max_length=20, choices=LINGUA_CHOICES, default='pt')
     explicacao = models.TextField()
     resposta_correta = models.CharField(max_length=1)
+    tema = models.CharField(max_length=50, default='phishing')
 
     def __str__(self):
         return f"({self.lingua}) Nivel {self.nivel_dificuldade} - {self.pergunta[:50]}"

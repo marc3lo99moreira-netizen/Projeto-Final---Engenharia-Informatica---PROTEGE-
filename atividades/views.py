@@ -92,7 +92,8 @@ def quiz(request):
         'opcoes': opcoes,
         'numero': atual + 1,
         'total': len(indice),
-        'mostrar_popup': False
+        'mostrar_popup': False,
+        'tema_da_pergunta': pergunta.tema
     }
 
 
@@ -120,7 +121,8 @@ def quiz(request):
         context.update({
             'mostrar_popup': True,
             'esta_correto': esta_correto,
-            'explicacao': pergunta.explicacao
+            'explicacao': pergunta.explicacao,
+            'tema_da_pergunta': pergunta.tema
         })
 
         #salva a sessao na bd

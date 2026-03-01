@@ -1,0 +1,151 @@
+:root {
+   
+    --bg-verde-claro: #c6e4bc;
+    --verde-principal: #4CAF50;
+    --verde-escuro: #1b3211;
+    --branco-card: rgba(255, 255, 255, 0.8); 
+}
+
+.header-main-dashboard {
+    position: fixed; 
+    top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+
+.header-pill-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; 
+    width: 95%;
+    max-width: 1200px;
+}
+
+
+.tema-conteudo p {
+    line-height: 1.6;
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+
+.tema-conteudo b {
+    color: var(--verde-escuro);
+}
+
+.tema-conteudo br + br {
+    display: block;
+    content: "";
+    margin-top: 10px;
+}
+.doc-container {
+    margin-top: 140px !important; 
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+}
+
+
+.profile-area {
+    flex-shrink: 0; 
+    display: flex;
+    align-items: center;
+}
+
+body.doc-page {
+    background-color: var(--bg-verde-claro);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding-top: 130px; 
+}
+
+
+.serif-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    color: var(--verde-escuro);
+    margin-bottom: 10px;
+}
+
+
+.active-doc {
+    background: var(--verde-escuro) !important;
+}
+
+
+.doc-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.doc-sidebar {
+    background: var(--branco-card);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 30px;
+    height: fit-content;
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 140px; 
+}
+
+.doc-sidebar h3 {
+    color: var(--verde-escuro);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.doc-sidebar ul { list-style: none; padding: 0; }
+.doc-sidebar li { margin-bottom: 15px; }
+.doc-sidebar a { 
+    text-decoration: none; 
+    color: var(--verde-escuro); 
+    font-weight: 600;
+    transition: 0.3s;
+    display: block;
+}
+
+.doc-sidebar a:hover { transform: translateX(5px); color: var(--verde-principal); }
+
+
+.doc-card {
+    background: var(--branco-card);
+    backdrop-filter: blur(5px);
+    padding: 40px;
+    border-radius: 35px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+}
+
+.doc-card h2 { color: var(--verde-escuro); margin: 10px 0; }
+.card-icon { font-size: 2.5rem; }
+
+.dica-box {
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 6px solid var(--verde-principal);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 0 20px 20px 0;
+}
+
+
+.footer-protege {
+    text-align: center;
+    padding: 60px;
+    color: var(--verde-escuro);
+    font-weight: 800;
+    opacity: 0.7;
+}
