@@ -11,7 +11,7 @@ from django.dispatch import receiver
 from .forms import EditarPerfilForm
 from django.db import transaction 
 from django.utils import translation
-
+from django_otp import user_has_device
 
 
 @login_required
@@ -24,32 +24,12 @@ def home(request):
 
 
 
-def login_view(request):
-    #o utilizador depois de carregar no botao login, o usrename e a paassword sao guardados e vao ser comparados para ver se correspondem
-    if request.method == 'POST':
-        username_login = request.POST.get("username")
-        password_login = request.POST.get("password")
-        user = authenticate(request, username=username_login, password=password_login)
+from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.utils import translation
 
-        if user is not None:
-            login(request, user) #a pass e o nome corresponderam e faz login
-
-            
-            lang = getattr(user.perfil, 'lingua', 'pt') #ou usa a lingua que esta no perfil ou usa pt por padrao
-            translation.activate(lang)
-
-            request.session['_language'] = lang  # Guarda a língua na sessão para o resto do site
-            request.session['django_language'] = lang
-            response = redirect('atividades:home2')
-
-
-            response.set_cookie('django_language', lang)
-            return response
-        else:
-            #mesagem de erro se a pass ou o nome nao der como na bd
-            messages.error(request, "Credenciais inválidas. Tente novamente.")
-            return render(request, 'users/login.html')
-    return render(request, 'users/login.html')
+from django_otp import user_has_device 
 
 
 
@@ -58,37 +38,38 @@ def registar(request):
     if request.method == 'POST':
         dados = request.POST
         
-        #so verifica se as passes sao iguais
         if dados.get('password') != dados.get('confirm_password'):
             messages.error(request, "As palavras-passe não coincidem!")
             return render(request, 'users/registar.html')
         
-        #ve se o username ja existe
         if User.objects.filter(username=dados.get('username')).exists():
             messages.error(request, "Este nome de utilizador já está em uso.")
             return render(request, 'users/registar.html')
 
 
-        #garante que o utilizador e criado completo, se falhar algo anula a criacao do utilizador
         try:
             with transaction.atomic():
-                user = User.objects.create_user(#create_user ja mete automaticamente o hashing nas passes
+                user = User.objects.create_user(
                     username=dados.get('username'),
                     email=dados.get('email'),
                     password=dados.get('password')
                 )
                 
-                Perfil.objects.create(
-                    user=user, 
-                    instituicao=dados.get('instituicao'), 
-                    idade=dados.get('idade'), 
-                    ano_letivo=dados.get('ano_letivo')
-                )
+    
+                perfil, created = Perfil.objects.get_or_create(user=user)
+                
+          
+                perfil.instituicao = dados.get('instituicao')
+                perfil.idade = int(dados.get('idade') or 0)
+                perfil.ano_letivo = dados.get('ano_letivo')
+                perfil.save() 
             
-            messages.success(request, "Conta criada com sucesso! Podes agora entrar.")
-            return redirect('login') 
+            messages.success(request, "Conta criada com sucesso! Podes entrar.")
+            return redirect('login')
+            
         except Exception as e:
-            messages.error(request, "Ocorreu um erro ao criar a conta. Tente novamente.")
+            print(f"Erro no registo: {e}")
+            messages.error(request, f"Erro ao criar conta: {e}")
             return render(request, 'users/registar.html')
 
     return render(request, 'users/registar.html')

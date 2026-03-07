@@ -200,6 +200,22 @@ def quiz_final(request):
         perfil.pontuacao_total_quiz -=30
         subiu = True
 
+    xp_ganho = pontos * 7 
+    perfil.xp_geral += xp_ganho
+    subiu_geral = False
+
+    
+    xp_necessario = perfil.nivel_geral * 100
+
+   
+    while perfil.xp_geral >= xp_necessario:
+        perfil.xp_geral -= xp_necessario 
+        perfil.nivel_geral += 1          
+        subiu_geral = True              
+        
+        xp_necessario = perfil.nivel_geral * 100
+
+
     perfil.save()
 
     #limpa a  para depois comecar na pergunta 1 e com pontuacao 0 e respostas vazias
@@ -215,7 +231,13 @@ def quiz_final(request):
         'resultado': resultado,
         'xp_atual': perfil.pontuacao_total_quiz,
         'nivel_atual': perfil.nivel_quiz,
-        'subiu': subiu
+        'subiu': subiu,
+
+        'subiu_geral': subiu_geral,
+        'xp_ganho': xp_ganho,
+        'nivel_geral': perfil.nivel_geral,
+        'xp_geral_atual': perfil.xp_geral,
+        'xp_para_proximo': xp_necessario
     })
 
 

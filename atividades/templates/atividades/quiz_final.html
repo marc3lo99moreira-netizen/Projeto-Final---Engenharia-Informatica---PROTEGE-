@@ -14,8 +14,6 @@
     <div id="content-wrapper" class="{% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% else %}normal normal{% endif %}">
         
         <main class="rf-main">
-            <h1 class="rf-titulo">{% trans "Parabéns!" %}</h1>
-            
             <div class="rf-card">
                 <div class="rf-badge-escudo">🛡️</div>
                 <p class="rf-label">{% trans "O teu resultado foi:" %}</p>
@@ -36,6 +34,25 @@
                         {% endif %}
                     </p>
                 </div>
+                <div class="rf-xp-info" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px dashed rgba(37, 77, 26, 0.2);">
+                    <p style="font-size: 1.2rem; font-weight: 900; color: var(--d3-verde-noite); text-transform: uppercase;">
+                        🌟 {% trans "Nível Geral" %}: {{ nivel_geral }}
+                    </p>
+                    
+                    <p style="font-size: 1.1rem; color: #4b5563; margin: 0.5rem 0;">
+                        {% trans "Ganhaste" %} <strong style="color: var(--d3-neon-leaf); font-size: 1.3rem;">+{{ xp_ganho }} XP</strong>!
+                    </p>
+                    
+                    <div class="xp-progress-wrapper" style="width: 100%; max-width: 300px; margin: 1rem auto 0.5rem;">
+                        <div style="width: 100%; background-color: rgba(37, 77, 26, 0.1); border-radius: 50px; height: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5);">
+                            <div style="width: {% widthratio xp_geral_atual xp_para_proximo 100 %}%; background-color: var(--d3-neon-leaf); height: 100%; transition: width 1s ease-in-out;"></div>
+                        </div>
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; font-weight: 700; color: #6b7280;">
+                        {{ xp_geral_atual }} / {{ xp_para_proximo }} XP {% trans "para o próximo nível" %}
+                    </p>
+                </div>
             </div>
 
             <div class="rf-btn-group">
@@ -49,12 +66,26 @@
         </main>
 
         {% if subiu %}
-        <div class="overlay">
-            <div class="popup-card">
+        <div class="overlay" id="popup-quiz"> <div class="popup-card">
                 <div class="popup-icon">✅</div>
                 <h2 class="popup-title">{% trans "Subiste de Nível!" %}</h2>
-                <p class="popup-text">{% trans "Desbloqueaste um novo nível de dificuldade." %}</p>
-                <button onclick="fecharpopup()" class="btn-continue">{% trans "Fechar" %}</button>
+                <p class="popup-text">{% trans "Desbloqueaste um novo nível de dificuldade no Quiz." %}</p>
+                <button onclick="document.getElementById('popup-quiz').style.display='none'" class="btn-continue">{% trans "Fechar" %}</button>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if subiu_geral %}
+        <div class="overlay" id="popup-geral">
+            <div class="popup-card" style="border-color: #ffd700;">
+                <div class="popup-icon" style="animation: bounce 1s infinite;">🌟</div>
+                <h2 class="popup-title" style="color: #d4af37;">{% trans "Subida de Nível!" %}</h2>
+                <p class="popup-text">
+                    {% trans "Parabéns! O teu esforço compensou e atingiste o" %} <strong>{% trans "Nível" %} {{ nivel_geral }}</strong> {% trans "Geral de Cibersegurança!" %}
+                </p>
+                <button onclick="document.getElementById('popup-geral').style.display='none'" class="btn-continue" style="background: #d4af37;">
+                    {% trans "Incrível!" %}
+                </button>
             </div>
         </div>
         {% endif %}

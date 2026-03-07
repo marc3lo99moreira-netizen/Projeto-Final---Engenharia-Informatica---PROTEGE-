@@ -28,6 +28,8 @@ class Perfil(models.Model):
     instituicao = models.CharField(max_length=200)
     idade = models.PositiveIntegerField()
     ano_letivo = models.CharField(max_length=50)
+    nivel_geral = models.IntegerField(default=1)
+    xp_geral = models.IntegerField(default=0)
     nivel_quiz = models.IntegerField(default=1)
     quizzes_realizados = models.PositiveIntegerField(default=0)
     soma_percentagens = models.FloatField(default=0.0)
