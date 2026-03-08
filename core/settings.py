@@ -189,7 +189,7 @@ TWO_FACTOR_PATCH_ADMIN = True
 
 TWO_FACTOR_TOTP_DIGITS = 6
 OTP_TOTP_ISSUER = 'Protege+'
-# Se usares o django-otp diretamente para configurar:
+
 OTP_TOTP_SYNC_MODULO = 1
 #conecta o google com o mfa
 ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
@@ -205,7 +205,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'marc3lo99moreira@gmail.com' 
 
-EMAIL_HOST_PASSWORD = 'svnsjgbjxinevtsj' 
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 DEFAULT_FROM_EMAIL = 'Equipa Protege+ <marc3lo99moreira@gmail.com>'
