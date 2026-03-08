@@ -18,10 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.i18n import JavaScriptCatalog
 
+from two_factor.urls import urlpatterns as tf_urls
+from two_factor.views import LoginView
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('users.urls')),
+    path('9UMOYRE2CSZH/', admin.site.urls), 
+    path('login/', LoginView.as_view(template_name='users/login.html'), name='login'),
+    
+
+    path('', include('users.urls')), 
+    
+    path('accounts/', include('allauth_2fa.urls')),
+    path('mfa/', include(tf_urls)), 
+    
     path('atividades/', include('atividades.urls')),
-    path('accounts/', include('allauth.urls')),  # URLs do django-allauth
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('accounts/', include('allauth.urls')),
+    path('jsi18h/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]

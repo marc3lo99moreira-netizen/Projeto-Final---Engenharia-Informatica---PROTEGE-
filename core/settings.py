@@ -37,15 +37,26 @@ LANGUAGES = [
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
-    'atividades',
     'django.contrib.sites',
+
+  
+    'users',       
+    'atividades',  
+
+    'allauth_2fa',#login co google
+    'two_factor',
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    
+   
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -56,7 +67,7 @@ SITE_ID = 1
 
 #pagina para onde vai quem consegue fazer login
 SOCIALACCOUNT_LOGIN_ON_GET = True
-LOGIN_REDIRECT_URL = '/atividades/home2/'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -65,9 +76,11 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'allauth_2fa.middleware.AllauthTwoFactorMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -75,14 +88,18 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+   
+        'DIRS': [os.path.join(BASE_DIR, 'core', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.template.context_processors.i18n',
+                'django.template.context_processors.i18n', 
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+    
             ],
         },
     },
@@ -128,9 +145,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'pt'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Lisbon'
 
 USE_I18N = True
 
@@ -158,3 +174,38 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LANGUAGE_CODE = 'pt'
 LANGUAGE_COOKIE_NAME = 'django_language' # Nome padrão esperado
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/atividades/home2/'
+
+#para o login google ser compativel com mfa
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+TWO_FACTOR_PATCH_ADMIN = True
+
+#TWO_FACTOR_QR_FACTORY = 'qrcode.image.svg.SvgPathImage'
+
+TWO_FACTOR_TOTP_DIGITS = 6
+OTP_TOTP_ISSUER = 'Protege+'
+# Se usares o django-otp diretamente para configurar:
+OTP_TOTP_SYNC_MODULO = 1
+#conecta o google com o mfa
+ACCOUNT_ADAPTER = 'allauth_2fa.adapter.OTPAdapter'
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+EMAIL_HOST_USER = 'marc3lo99moreira@gmail.com' 
+
+EMAIL_HOST_PASSWORD = 'svnsjgbjxinevtsj' 
+
+
+DEFAULT_FROM_EMAIL = 'Equipa Protege+ <marc3lo99moreira@gmail.com>'

@@ -1,0 +1,63 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Segunda Chave" %} | Protege+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
+</head>
+<body class="view-autenticacao">
+
+    <div class="wrapper-split">
+
+        <main class="ala-principal-direita">
+            <header class="header-navegacao-login">
+                <a href="{% url 'home' %}" class="logotipo-superior">
+                    <div class="emblema-marca">🛡️</div>
+                    <span class="nome-marca-estilizado">Protege+</span>
+                </a>
+
+                <a href="{% url 'login' %}" class="btn-exit-login">
+                    <span>←</span> {% trans "Voltar" %}
+                </a>
+            </header>
+
+            <div class="modulo-login">
+                <h2 class="cabecalho-form">
+                    {% trans "Segunda Chave" %}
+                </h2>
+
+                <p style="color: white; margin-bottom: 20px; text-align: center; font-style: italic;">
+                    {% trans "Introduz o código gerado pela tua aplicação." %}
+                </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="agrupamento-input">
+                        <label class="etiqueta-input">{% trans "Código de 6 dígitos" %}</label>
+                        <input type="text" name="otp_token" placeholder="000 000" class="caixa-texto-protege" 
+                               autofocus maxlength="6" pattern="[0-9]*" inputmode="numeric" required
+                               style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+                    </div>
+
+                    {% if form.errors %}
+                        <div class="notificacao-erro">
+                            ⚠️ {% trans "Código inválido. Tenta novamente." %}
+                        </div>
+                    {% endif %}
+
+                    <button type="submit" class="botao-acao-principal">
+                        {% trans "Verificar" %}
+                    </button>
+                </form>
+            </div>
+        </main>
+        
+    </div>
+
+</body>
+</html>

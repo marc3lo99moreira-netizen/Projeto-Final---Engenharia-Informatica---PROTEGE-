@@ -1,0 +1,75 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans "Segurança" %} | Protege+</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    
+</head>
+<body>
+    
+    <div class="header-pill">🛡️ Protege+ | {% trans "Segurança" %}</div>
+    
+    <div class="security-card">
+        <h1 class="title">{% trans "Definições MFA" %}</h1>
+        
+        <div class="status-badge">✅ {% trans "CONTA BLINDADA" %}</div>
+        
+        <p class="description">
+            {% trans "A tua conta está atualmente protegida pela Autenticação de Dois Fatores. Tens uma camada extra de segurança contra intrusos." %}
+        </p>
+        
+        <a href="{% url 'two_factor:backup_tokens' %}" class="btn-action">
+            📜 {% trans "Códigos de Reserva" %}
+        </a>
+        
+        <button onclick="abrirPopup()" class="btn-action btn-danger">
+            ⚠️ {% trans "Desativar MFA" %}
+        </button>
+        
+        <a href="{% url 'atividades:home2' %}" class="back-link">
+            ← {% trans "Voltar ao Dashboard" %}
+        </a>
+    </div>
+
+    <div id="popupDesativar" class="modal-overlay">
+        <div class="modal-card">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">🚨</div>
+            <h2 class="title">{% trans "Atenção!" %}</h2>
+            
+            <p class="description" style="margin-bottom: 20px;">
+                {% trans "Estás prestes a desativar a autenticação de dois fatores. Isto enfraquece a segurança da tua conta." %}
+            </p>
+            
+            <form action="{% url 'two_factor:disable' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="understand" required>
+                        {% trans "Sim, quero desativar." %}
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn-action btn-confirm-danger">{% trans "Confirmar Desativação" %}</button>
+            </form>
+            
+            <button onclick="fecharPopup()" class="back-link">← {% trans "Cancelar" %}</button>
+        </div>
+    </div>
+
+    <script>
+        function abrirPopup() {
+            document.getElementById('popupDesativar').classList.add('active');
+        }
+        function fecharPopup() {
+            document.getElementById('popupDesativar').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
