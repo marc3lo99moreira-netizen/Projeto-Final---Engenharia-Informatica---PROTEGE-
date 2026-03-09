@@ -1,187 +1,168 @@
 :root {
-   
-    --bg-verde-claro: #c6e4bc;
-    --verde-principal: #4CAF50;
-    --verde-escuro: #1b3211;
-    --branco-card: rgba(255, 255, 255, 0.8); 
-}
-
-.header-main-dashboard {
-    position: absolute; 
-    top: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 1000;
-}
-
-
-.header-pill-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px; 
-    width: 95%;
-    max-width: 1200px;
-}
-
-
-.tema-conteudo p {
-    line-height: 1.6;
-    color: #333;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-}
-
-
-.tema-conteudo b {
-    color: var(--verde-escuro);
-}
-
-.tema-conteudo br + br {
-    display: block;
-    content: "";
-    margin-top: 10px;
-}
-
-.doc-container {
-    display: block;
-    max-width: 1200px;
-    margin: 0 auto; 
-    padding: 20px;
-}
-
-.profile-area {
-    flex-shrink: 0; 
-    display: flex;
-    align-items: center;
+  --bg-verde-claro: #c6e4bc;
+  --verde-principal: #4caf50;
+  --verde-escuro: #1b3211;
+  --branco-card: rgba(255, 255, 255, 0.8);
+  --musgo-suave: #76a361;
 }
 
 body.doc-page {
-    margin: 0;
-    padding: 0; 
-    background-color: var(--d3-fundo-base); 
-}
-
-
-.serif-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 3rem;
-    color: var(--verde-escuro);
-    margin: 0; 
-    line-height: 1;
-}
-
-.active-doc {
-    background: var(--verde-escuro) !important;
-}
-
-
-.doc-content {
-    margin-left: 320px; 
-    padding-top: 20px;     
-}
-
-.doc-sidebar {
-    position: fixed;
-    top: 240px; 
-    width: 280px;
-    background: var(--branco-card);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.4);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-    z-index: 100;
-}
-
-.doc-sidebar h3 {
-    color: var(--verde-escuro);
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.doc-sidebar ul { list-style: none; padding: 0; }
-.doc-sidebar li { margin-bottom: 15px; }
-.doc-sidebar a { 
-    text-decoration: none; 
-    color: var(--verde-escuro); 
-    font-weight: 600;
-    transition: 0.3s;
-    display: block;
-}
-
-.doc-sidebar a:hover { transform: translateX(5px); color: var(--verde-principal); }
-
-
-.doc-card {
-    background: var(--branco-card);
-    backdrop-filter: blur(5px);
-    padding: 40px;
-    border-radius: 35px;
-    margin-bottom: 30px;
-    border: 1px solid rgba(255,255,255,0.3);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-}
-
-.doc-card h2 { color: var(--verde-escuro); margin: 10px 0; }
-.card-icon { font-size: 2.5rem; }
-
-.dica-box {
-    background: rgba(76, 175, 80, 0.1);
-    border-left: 6px solid var(--verde-principal);
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 0 20px 20px 0;
-}
-
-
-.footer-protege {
-    text-align: center;
-    padding: 60px;
-    color: var(--verde-escuro);
-    font-weight: 800;
-    opacity: 0.7;
-}
-.doc-header {
-    margin-top: 0; 
-    margin-bottom: 25px;
-}
-
-body:has(#content-wrapper.tritanopia) { 
-    background-color: #b8c7b5 !important; 
-}
-
-body:has(#content-wrapper.protanopia) { 
-    background-color: #9dbbd1 !important; 
-}
-
-body:has(#content-wrapper.deuteranopia) { 
-    background-color: #b1c2d1 !important; 
-}
-
-body:has(#content-wrapper.achromatopsia) { 
-    background-color: #cccccc !important; 
-}
-
-
-body:has(#content-wrapper.modo-escuro) { 
-    background-color: #121212 !important; 
-}
-
-
-body:has(#content-wrapper.contraste-invertido) { 
-    background-color: #000000 !important; 
+  margin: 0;
+  padding: 0;
+  background-color: var(--musgo-suave);
 }
 
 #content-wrapper {
-    min-height: 100vh;
-    width: 100%;
-    padding-top: 130px; 
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  padding-top: 130px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--musgo-suave);
+}
+
+.header-main-dashboard {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.header-pill-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.tema-conteudo p {
+  line-height: 1.6;
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.tema-conteudo b {
+  color: var(--verde-escuro);
+}
+
+.tema-conteudo br + br {
+  display: block;
+  content: "";
+  margin-top: 10px;
+}
+
+.doc-container {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-area {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.serif-title {
+  font-family: "Instrument Serif", serif;
+  font-size: 3rem;
+  color: var(--verde-escuro);
+  margin: 0;
+  line-height: 1;
+}
+
+.active-doc {
+  background: var(--verde-escuro) !important;
+}
+
+.doc-content {
+  margin-left: 320px;
+  padding-top: 20px;
+}
+
+.doc-sidebar {
+  position: fixed;
+  top: 240px;
+  width: 280px;
+  background: var(--branco-card);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.doc-sidebar h3 {
+  color: var(--verde-escuro);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.doc-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.doc-sidebar li {
+  margin-bottom: 15px;
+}
+.doc-sidebar a {
+  text-decoration: none;
+  color: var(--verde-escuro);
+  font-weight: 600;
+  transition: 0.3s;
+  display: block;
+}
+
+.doc-sidebar a:hover {
+  transform: translateX(5px);
+  color: var(--verde-principal);
+}
+
+.doc-card {
+  background: var(--branco-card);
+  backdrop-filter: blur(5px);
+  padding: 40px;
+  border-radius: 35px;
+  margin-bottom: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+}
+
+.doc-card h2 {
+  color: var(--verde-escuro);
+  margin: 10px 0;
+}
+.card-icon {
+  font-size: 2.5rem;
+}
+
+.dica-box {
+  background: rgba(76, 175, 80, 0.1);
+  border-left: 6px solid var(--verde-principal);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 0 20px 20px 0;
+}
+
+.footer-protege {
+  text-align: center;
+  padding: 60px;
+  color: var(--verde-escuro);
+  font-weight: 800;
+  opacity: 0.7;
+}
+.doc-header {
+  margin-top: 0;
+  margin-bottom: 25px;
 }

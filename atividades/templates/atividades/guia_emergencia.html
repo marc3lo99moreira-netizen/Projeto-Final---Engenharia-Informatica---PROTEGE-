@@ -6,31 +6,33 @@
     <title>{% trans "Guia de Emergência" %} | Protege+</title>
     <link rel="stylesheet" href="{% static 'atividades/css/home2.css' %}" />
     <link rel="stylesheet" href="{% static 'atividades/css/guia_emergencia.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/acessibilidade.css' %}">
 </head>
-<body class="bg-dashboard" data-authenticated="{{ user.is_authenticated|lower }}">
 
-    <div id="content-wrapper" class="{% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% endif %}">
+<body class="bg-dashboard {% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% endif %}" data-authenticated="{{ user.is_authenticated|lower }}">
+
+    <header class="header-main">
+        <div class="header-pill">
+            <a href="{% if user.is_authenticated %}{% url 'atividades:home2' %}{% else %}{% url 'home' %}{% endif %}" class="brand">
+                <div class="brand-icon">🛡️</div>
+                <span class="brand-name">Protege+</span>
+            </a>
+
+            <nav class="nav-menu">
+                {% if not user.is_authenticated %}
+                <div class="auth-buttons">
+                    <a href="{% url 'login' %}" class="btn-registar">{% trans "Entrar" %}</a>
+                    <a href="{% url 'registar' %}" class="btn-registar">{% trans "Registar" %}</a>
+                </div>
+                {% else %}
+                <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← {% trans "Voltar" %}</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <div id="content-wrapper">
         
-        <header class="header-main">
-            <div class="header-pill">
-                <a href="{% if user.is_authenticated %}{% url 'atividades:home2' %}{% else %}{% url 'home' %}{% endif %}" class="brand">
-                    <div class="brand-icon">🛡️</div>
-                    <span class="brand-name">Protege+</span>
-                </a>
-
-                <nav class="nav-menu">
-                    {% if not user.is_authenticated %}
-                    <div class="auth-buttons">
-                        <a href="{% url 'login' %}" class="btn-registar">{% trans "Entrar" %}</a>
-                        <a href="{% url 'registar' %}" class="btn-registar">{% trans "Registar" %}</a>
-                    </div>
-                    {% else %}
-                    <a href="javascript:history.go(-1)" class="nav-link btn-voltar">← {% trans "Voltar" %}</a>
-                    {% endif %}
-                </nav>
-            </div>
-        </header>
-
         <main class="main-guia-container">
             <h1 class="serif-title" style="font-size: 3rem; color: var(--d3-verde-noite); margin-top: 20px">
                 🚨 {% trans "Centro de Resposta Rápida" %}
@@ -53,9 +55,9 @@
                 <p class="section-subtitle emerg">{% trans "Ação imediata para incidentes ativos:" %}</p>
                 <div class="threats-glitch-grid">
                     <div class="threat-item" onclick="mostrarInstrucoes('{% if user.is_authenticated %}phishing{% else %}phishing_vazio{% endif %}')">
-                        <div class="threat-alert-tag">❗ {% trans "AJUDA IMEDIATA" %}</div>
+                        <div class="threat-alert-tag"> {% trans "AJUDA IMEDIATA" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">🎣</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Cliquei num link suspeito" %}</h3>
                             <p>{% trans "O que fazer se interagiste com uma mensagem maliciosa." %}</p>
                         </div>
@@ -63,9 +65,9 @@
                     </div>
 
                     <div class="threat-item" onclick="mostrarInstrucoes('{% if user.is_authenticated %}password{% else %}password_vazio{% endif %}')">
-                        <div class="threat-alert-tag">❗ {% trans "CONTA COMPROMETIDA" %}</div>
+                        <div class="threat-alert-tag"> {% trans "CONTA COMPROMETIDA" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">🔑</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Hackearam a minha conta" %}</h3>
                             <p>{% trans "Passos para recuperar o acesso e expulsar intrusos." %}</p>
                         </div>
@@ -73,9 +75,9 @@
                     </div>
 
                     <div class="threat-item" onclick="mostrarInstrucoes('{% if user.is_authenticated %}banco{% else %}banco_vazio{% endif %}')">
-                        <div class="threat-alert-tag">❗ {% trans "SEGURANÇA BANCÁRIA" %}</div>
+                        <div class="threat-alert-tag">{% trans "SEGURANÇA BANCÁRIA" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">💳</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Dados bancários expostos" %}</h3>
                             <p>{% trans "Protege o teu dinheiro e bloqueia acessos indevidos." %}</p>
                         </div>
@@ -91,7 +93,7 @@
                     <div class="threat-item mitigacao" onclick="mostrarInstrucoes('{% if user.is_authenticated %}mfa{% else %}banco_vazio{% endif %}')">
                         <div class="threat-alert-tag">🛡️ {% trans "PREVENÇÃO" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">📱</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Ativa o MFA (2FA)" %}</h3>
                             <p>{% trans "Adiciona uma segunda camada de segurança. Mesmo com a password, o hacker não entra." %}</p>
                         </div>
@@ -101,7 +103,7 @@
                     <div class="threat-item mitigacao" onclick="mostrarInstrucoes('{% if user.is_authenticated %}gestor{% else %}banco_vazio{% endif %}')">
                         <div class="threat-alert-tag">🛡️ {% trans "PREVENÇÃO" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">🧐</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Gestor de Passwords" %}</h3>
                             <p>{% trans "Usa passwords únicas e complexas para cada site sem teres de as memorizar." %}</p>
                         </div>
@@ -111,7 +113,7 @@
                     <div class="threat-item mitigacao" onclick="mostrarInstrucoes('{% if user.is_authenticated %}updates{% else %}banco_vazio{% endif %}')">
                         <div class="threat-alert-tag">🛡️ {% trans "PREVENÇÃO" %}</div>
                         <div class="threat-content">
-                            <div class="threat-icon">🔄</div>
+                            <div class="threat-icon"></div>
                             <h3 class="threat-title">{% trans "Atualizações Frequentes" %}</h3>
                             <p>{% trans "Mantém o sistema e apps atualizados para fechar falhas de segurança conhecidas." %}</p>
                         </div>
@@ -127,6 +129,8 @@
             </div>
         </main>
     </div>
+
+    {% include 'partials/footer_acessibilidade.html' %}
 
     <script src="{% url 'javascript-catalog' %}"></script>
     <script src="{% static 'js/scripts.js' %}"></script>

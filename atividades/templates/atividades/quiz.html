@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% trans "Quiz" %} | Protege+</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'atividades/css/quiz.css' %}">
-   
     
+    <link rel="stylesheet" href="{% static 'atividades/css/quiz.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/acessibilidade.css' %}">
 </head>
-<body data-authenticated="{{ user.is_authenticated|lower }}">
 
-    <div id="content-wrapper" class="{% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% else %}normal normal{% endif %}">
+<body data-authenticated="{{ user.is_authenticated|lower }}" class="{% if user.is_authenticated and user.perfil %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% endif %}">
+
+    <div id="content-wrapper">
 
         <header class="header-quiz">
             <div class="pointer-events-auto">
@@ -90,9 +92,10 @@
             </div>
         </div>
         {% endif %}
+        
         {% if numero == 1 and not mostrar_popup %}
         <div class="overlay" id="intro-overlay">
-            <div class="popup-card popup-introducao"">
+            <div class="popup-card popup-introducao">
                 
                 <div class="popup-icon" style="background: var(--d3-fundo-base); color: var(--d3-verde-noite);">
                     🧠
@@ -119,33 +122,7 @@
 
     </div>
 
-    <footer class="footer-fixed">
-        <div id="daltonismo-menu" class="access-menu hidden">
-            <h3>{% trans "Acessibilidade" %}</h3>
-            <button onclick="setDaltonismo('normal')" class="menu-btn">{% trans "Padrão" %}</button>
-            <button onclick="setDaltonismo('protanopia')" class="menu-btn">{% trans "Protanopia" %}</button>
-            <button onclick="setDaltonismo('deuteranopia')" class="menu-btn">{% trans "Deuteranopia" %}</button>
-            <button onclick="setDaltonismo('tritanopia')" class="menu-btn">{% trans "Tritanopia" %}</button>
-            <button onclick="setDaltonismo('achromatopsia')" class="menu-btn">{% trans "P&B" %}</button>
-        </div>
-
-        <div id="contraste-menu" class="access-menu hidden">
-            <h3>{% trans "Contraste" %}</h3>
-            <button onclick="setContraste('normal')" class="menu-btn">{% trans "Padrão" %}</button>
-            <button onclick="setContraste('alto-contraste')" class="menu-btn">{% trans "Alto Contraste" %}</button>
-            <button onclick="setContraste('contraste-invertido')" class="menu-btn">{% trans "Invertido" %}</button>
-            <button onclick="setContraste('modo-escuro')" class="menu-btn">{% trans "Modo Escuro" %}</button>
-        </div>
-
-        <div class="access-pill">
-            <button onclick="toggleDaltonismoMenu()" class="access-btn">
-                <img src="{% static 'users/images/daltonismo.png' %}" alt="Daltonismo" style="width:20px;">
-            </button>
-            <button onclick="toggleContrasteMenu()" class="access-btn">
-                <img src="{% static 'users/images/contraste.png' %}" alt="Contraste" style="width:20px;">
-            </button>
-        </div>
-    </footer>
+    {% include 'partials/footer_acessibilidade.html' %}
 
     <script src="{% static 'js/scripts.js' %}"></script>
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

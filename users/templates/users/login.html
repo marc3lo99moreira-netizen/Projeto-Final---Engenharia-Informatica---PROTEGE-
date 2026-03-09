@@ -9,137 +9,116 @@
     <title>{% trans "Acesso" %} | Protege+</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/acessibilidade.css' %}">
 </head>
-<body class="view-autenticacao" data-authenticated="{{ user.is_authenticated|lower }}">
+<body class="view-autenticacao {% if user.is_authenticated %}{{ user.perfil.filtro_daltonismo }} {{ user.perfil.filtro_contraste }}{% endif %}" data-authenticated="{{ user.is_authenticated|lower }}">
 
-    <div class="wrapper-split">
-        <aside class="ala-lateral-esquerda">
-            <a href="{% url 'home' %}" class="link-logotipo">
-                <div class="emblema-marca">🛡️</div>
-                <span class="nome-marca-estilizado">Protege+</span>
-            </a>
-            
-            <div class="zona-personagem">
-                <img src="{% static 'users/images/avatar_perfil.png' %}" alt="Protege+" class="img-personagem">
-            </div>
-            <div></div> </aside>
+    <header class="header-navegacao-login">
+        <a href="{% url 'home' %}" class="logotipo-superior">
+            <div class="emblema-marca">🛡️</div>
+            <span class="nome-marca-estilizado">Protege+</span>
+        </a>
 
-        <main class="ala-principal-direita">
-            <header class="header-navegacao-login">
-                <a href="{% url 'home' %}" class="logotipo-superior">
+        <a href="{% url 'home' %}" class="btn-exit-login">
+            <span>←</span> {% trans "Voltar" %}
+        </a>
+    </header>
+
+    <div id="content-wrapper">
+        <div class="wrapper-split">
+            <aside class="ala-lateral-esquerda">
+                <a href="{% url 'home' %}" class="link-logotipo">
                     <div class="emblema-marca">🛡️</div>
                     <span class="nome-marca-estilizado">Protege+</span>
                 </a>
+                
+                <div class="zona-personagem">
+                    <img src="{% static 'users/images/avatar_perfil.png' %}" alt="Protege+" class="img-personagem">
+                </div>
+                <div></div> 
+            </aside>
 
-                <a href="{% url 'home' %}" class="btn-exit-login">
-                    <span>←</span> {% trans "Voltar" %}
-                </a>
-            </header>
+            <main class="ala-principal-direita">
+                <div class="modulo-login">
+                    <h2 class="cabecalho-form">
+                        {% if wizard.steps.current == 'auth' %}
+                            {% trans "Acesso à Plataforma" %}
+                        {% else %}
+                            {% trans "Segunda Chave" %}
+                        {% endif %}
+                    </h2>
 
-            <div class="modulo-login">
-                <h2 class="cabecalho-form">
-                    {% if wizard.steps.current == 'auth' %}
-                        {% trans "Acesso à Plataforma" %}
-                    {% else %}
-                        {% trans "Segunda Chave" %}
-                    {% endif %}
-                </h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ wizard.management_form }}
 
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ wizard.management_form }}
+                        {% if wizard.steps.current == 'auth' %}
+                            <div class="agrupamento-input">
+                                <label class="etiqueta-input">{% trans "Nome de Utilizador" %}</label>
+                                <input type="text" name="auth-username" placeholder="ex: joao_seguro" class="caixa-texto-protege" autofocus>
+                            </div>
 
-                    {% if wizard.steps.current == 'auth' %}
-                        <div class="agrupamento-input">
-                            <label class="etiqueta-input">{% trans "Nome de Utilizador" %}</label>
-                            <input type="text" name="auth-username" placeholder="ex: joao_seguro" class="caixa-texto-protege" autofocus>
-                        </div>
+                            <div class="agrupamento-input">
+                                <label class="etiqueta-input">{% trans "Palavra-passe" %}</label>
+                                <input type="password" name="auth-password" placeholder="••••••••" class="caixa-texto-protege">
+                            </div>
+                        
+                        {% else %}
+                            <p style="color: white; margin-bottom: 20px; text-align: center; font-style: italic;">
+                                {% trans "Introduz o código gerado pela tua aplicação." %}
+                            </p>
+                            <div class="agrupamento-input">
+                                <label class="etiqueta-input">{% trans "Código de 6 dígitos" %}</label>
+                                <input type="text" name="token-otp_token" placeholder="000 000" class="caixa-texto-protege" 
+                                    autofocus maxlength="6" pattern="[0-9]*" inputmode="numeric" required
+                                    style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+                            </div>
+                        {% endif %}
 
-                        <div class="agrupamento-input">
-                            <label class="etiqueta-input">{% trans "Palavra-passe" %}</label>
-                            <input type="password" name="auth-password" placeholder="••••••••" class="caixa-texto-protege">
-                        </div>
-                    
-                    {% else %}
-                        <p style="color: white; margin-bottom: 20px; text-align: center; font-style: italic;">
-                            {% trans "Introduz o código gerado pela tua aplicação." %}
-                        </p>
-                        <div class="agrupamento-input">
-                            <label class="etiqueta-input">{% trans "Código de 6 dígitos" %}</label>
-                            <input type="text" name="token-otp_token" placeholder="000 000" class="caixa-texto-protege" 
-                                autofocus maxlength="6" pattern="[0-9]*" inputmode="numeric" required
-                                style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
-                        </div>
-                    {% endif %}
-
-                  
-                    {% if wizard.form.errors %}
-                        <div class="notificacao-erro">
-                            {% for field in wizard.form %}
-                                {% for error in field.errors %}
+                        {% if wizard.form.errors %}
+                            <div class="notificacao-erro">
+                                {% for field in wizard.form %}
+                                    {% for error in field.errors %}
+                                        <div class="mensagem-alerta">⚠️ {{ error }}</div>
+                                    {% endfor %}
+                                {% endfor %}
+                                
+                                {% for error in wizard.form.non_field_errors %}
                                     <div class="mensagem-alerta">⚠️ {{ error }}</div>
                                 {% endfor %}
-                            {% endfor %}
-                            
-                            {% for error in wizard.form.non_field_errors %}
-                                <div class="mensagem-alerta">⚠️ {{ error }}</div>
-                            {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <button type="submit" class="botao-acao-principal">
+                            {% if wizard.steps.current == 'auth' %}{% trans "Entrar Agora" %}{% else %}{% trans "Verificar" %}{% endif %}
+                        </button>
+                        {% if wizard.steps.current == 'auth' %}
+                        <div class="navegacao-secundaria" style="margin-top: 1.5rem;padding-top: .1rem;">
+                            <a href="{% url 'account_reset_password' %}" class="atalho-link">
+                                {% trans "Esqueci-me da palavra-passe" %}
+                            </a>
+                        </div>
+                        {% endif %}
+                    </form>
+                    
+                    {% if wizard.steps.current == 'auth' %}
+                        <div class="social-login-container">
+                            <div class="divisor-linha"><span>ou</span></div>
+                            <a href="{% provider_login_url 'google' %}" class="btn-google">
+                                <div class="google-icon-wrapper">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+                                </div>
+                                <span class="btn-text">{% trans "Entrar com Google" %}</span>
+                            </a>
                         </div>
                     {% endif %}
-
-                    <button type="submit" class="botao-acao-principal">
-                        {% if wizard.steps.current == 'auth' %}{% trans "Entrar Agora" %}{% else %}{% trans "Verificar" %}{% endif %}
-                    </button>
-                    {% if wizard.steps.current == 'auth' %}
-                    <div class="navegacao-secundaria" style="margin-top: 1.5rem;padding-top: .1rem;">
-                        <a href="{% url 'account_reset_password' %}" class="atalho-link">
-                            {% trans "Esqueci-me da palavra-passe" %}
-                        </a>
-                    </div>
-                    {% endif %}
-                </form>
-                
-                {% if wizard.steps.current == 'auth' %}
-                    <div class="social-login-container">
-                        <div class="divisor-linha"><span>ou</span></div>
-                        <a href="{% provider_login_url 'google' %}" class="btn-google">
-                            <div class="google-icon-wrapper">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
-                            </div>
-                            <span class="btn-text">{% trans "Entrar com Google" %}</span>
-                        </a>
-                    </div>
-                {% endif %}
-                
-            </div>
-        </main>
+                    
+                </div>
+            </main>
+        </div>
     </div>
 
-    <footer class="painel-acessibilidade-fixo">
-        <div id="daltonismo-menu" class="menu-suspenso hidden">
-            <button onclick="setDaltonismo('normal')" class="btn-escolha">Normal</button>
-            <button onclick="setDaltonismo('protanopia')" class="btn-escolha">Protanopia</button>
-            <button onclick="setDaltonismo('deuteranopia')" class="btn-escolha">Deuteranopia</button>
-            <button onclick="setDaltonismo('tritanopia')" class="btn-escolha">Tritanopia</button>
-            <button onclick="setDaltonismo('achromatopsia')" class="btn-escolha">Preto e Branco</button>
-        </div>
-
-        <div id="contraste-menu" class="menu-suspenso hidden">
-            <button onclick="setContraste('normal')" class="btn-escolha">Padrão</button>
-            <button onclick="setContraste('alto-contraste')" class="btn-escolha">Alto Contraste</button>
-            <button onclick="setContraste('modo-escuro')" class="btn-escolha">Modo Escuro</button>
-        </div>
-
-        <div class="bolha-opcoes">
-            <button onclick="toggleDaltonismoMenu()" class="botao-circular-acesso">
-                <img src="{% static 'users/images/daltonismo.png' %}" alt="Cores">
-            </button>
-            <button onclick="toggleContrasteMenu()" class="botao-circular-acesso">
-                <img src="{% static 'users/images/contraste.png' %}" alt="Contraste">
-            </button>
-        </div>
-    </footer>
+    {% include 'partials/footer_acessibilidade.html' %}
 
     <script src="{% static 'js/scripts.js' %}"></script>
 </body>

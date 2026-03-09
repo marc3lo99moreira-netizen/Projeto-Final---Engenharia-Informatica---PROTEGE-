@@ -1,4 +1,3 @@
-
 :root {
     --p-fundo: #C2E0B1;
     --p-primaria: #254d1a;
@@ -6,6 +5,7 @@
     --p-neve: #ffffff;
     --p-vidro-limpo: rgba(255, 255, 255, 0.45);
     --p-sombra: rgba(0, 0, 0, 0.15);
+    --musgo-suave: #76a361; 
 }
 
 * { 
@@ -16,15 +16,21 @@
 
 body.perf-view-ativa {
     font-family: 'Inter', sans-serif;
-    background-color: var(--p-fundo);
+    background-color: var(--musgo-suave); 
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#content-wrapper {
+    width: 100%;
+    min-height: 100vh; 
+    background-color: var(--musgo-suave); 
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 1.5rem 4rem;
-    transition: filter 0.3s ease, background 0.3s ease;
+    transition: filter 0.3s ease, background-color 0.3s ease;
 }
-
 
 .perf-topo-nav {
     position: fixed;
@@ -33,6 +39,7 @@ body.perf-view-ativa {
     z-index: 100;
     padding: 2.5rem;
     pointer-events: none;
+    transition: filter 0.3s ease;
 }
 
 .perf-btn-retroceder {
@@ -69,7 +76,6 @@ body.perf-view-ativa {
     gap: 2.5rem;
 }
 
-
 .perf-cartao-id {
     position: relative; 
     background: var(--p-vidro-limpo);
@@ -104,14 +110,8 @@ body.perf-view-ativa {
     z-index: 10;
 }
 
-.perf-btn-definicoes:hover {
-    background: var(--p-primaria);
-    transform: rotate(45deg);
-}
-
-.perf-btn-definicoes:hover .icon-gear {
-    filter: brightness(0) invert(1);
-}
+.perf-btn-definicoes:hover { background: var(--p-primaria); transform: rotate(45deg); }
+.perf-btn-definicoes:hover .icon-gear { filter: brightness(0) invert(1); }
 
 .perf-moldura-avatar {
     width: 6.5rem;
@@ -123,33 +123,11 @@ body.perf-view-ativa {
     margin-bottom: 1.5rem;
 }
 
-.perf-moldura-avatar img { 
-    width: 100%; 
-    height: 100%; 
-    border-radius: 50%; 
-    object-fit: cover; 
-}
+.perf-moldura-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.perf-nome-utilizador { font-size: 2.2rem; font-weight: 900; font-style: italic; color: var(--p-primaria); line-height: 1.1; }
+.perf-email-pill { background: var(--p-primaria); color: white; padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0.8rem 0 2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
-.perf-nome-utilizador {
-    font-size: 2.2rem;
-    font-weight: 900;
-    font-style: italic;
-    color: var(--p-primaria);
-    line-height: 1.1;
-}
-
-.perf-email-pill {
-    background: var(--p-primaria);
-    color: white;
-    padding: 0.4rem 1.2rem;
-    border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin: 0.8rem 0 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-/* Moldura */
+/* Moldura Dados e Barra Global */
 .perf-info-box {
     width: 100%;
     max-width: 450px;
@@ -159,81 +137,115 @@ body.perf-view-ativa {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .perf-info-linha {
     display: flex;
     justify-content: space-around;
-    padding-bottom: 1rem;
+    padding-bottom: 1.5rem;
     border-bottom: 1px solid rgba(37, 77, 26, 0.1);
 }
 
-.perf-dado-grupo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
+.perf-dado-grupo { display: flex; flex-direction: column; gap: 0.3rem; }
+.perf-dado-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; color: var(--p-primaria); opacity: 0.5; }
+.perf-dado-valor { font-size: 1.1rem; font-weight: 700; color: var(--p-primaria); }
 
-.perf-dado-label {
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: var(--p-primaria);
-    opacity: 0.5;
-}
-
-.perf-dado-valor {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--p-primaria);
-}
-
-/*Nível com Barras de XP */
-.perf-badges-niveis {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-.perf-badge {
-    background: var(--p-neve);
-    padding: 1rem 1.5rem;
-    border-radius: 20px;
-    min-width: 140px;
+/* BARRA DE PROGRESSO GLOBAL*/
+.perf-global-progresso {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    gap: 8px;
 }
 
-.perf-badge.destaque {
-    background: var(--p-acento);
-}
-
-.perf-badge.destaque span {
-    color: white !important;
-}
-
-.perf-badge-tipo {
-    font-size: 0.6rem;
+.perf-global-label {
+    font-size: 0.8rem;
     font-weight: 900;
-    color: var(--p-acento);
+    color: var(--p-primaria);
+    text-transform: uppercase;
 }
 
-.perf-badge-num {
-    font-size: 0.95rem;
+.perf-barra-global-container {
+    width: 100%;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.perf-barra-global-fill {
+    height: 100%;
+    background: var(--p-acento);
+    border-radius: 20px;
+    transition: width 1s ease-in-out;
+}
+
+.perf-global-xp {
+    font-size: 0.8rem;
     font-weight: 800;
     color: var(--p-primaria);
+    opacity: 0.8;
 }
 
-/* Estilos da Barra de XP */
-.perf-barra-mini-container {
+/* GRELHAS*/
+.perf-grid-estatisticas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
     width: 100%;
+}
+
+.perf-bloco-metrica {
+    background: var(--p-vidro-limpo);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem 1.5rem;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    text-align: center;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.perf-bloco-metrica:hover { transform: translateY(-8px); }
+
+.perf-bloco-metrica h3 {
+    color: var(--p-primaria);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.perf-valor-num {
+    display: block;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--p-acento);
+    margin-top: 0.8rem;
+}
+
+
+.perf-bloco-metrica.destaque {
+    background: var(--p-acento);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.perf-bloco-metrica.destaque h3,
+.perf-bloco-metrica.destaque .perf-valor-num {
+    color: white;
+}
+
+.perf-barra-mini-container {
+    width: 80%;
     height: 6px;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
-    margin-top: 8px;
+    margin: 15px auto 5px;
     overflow: hidden;
 }
 
@@ -246,133 +258,36 @@ body.perf-view-ativa {
 }
 
 .perf-xp-texto {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 800;
     color: rgba(255, 255, 255, 0.9);
-    margin-top: 4px;
 }
 
-/* GRELHA COM METRICAS*/
-.perf-grid-estatisticas {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    width: 100%;
+
+body.modo-escuro .perf-cartao-id, 
+body.modo-escuro .perf-bloco-metrica { 
+    background: #1e1e1e !important; 
+    border-color: #333 !important; 
 }
 
-.perf-bloco-metrica {
-    background: var(--p-vidro-limpo);
-    backdrop-filter: blur(10px);
-    padding: 3rem 2rem;
-    border-radius: 45px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    text-align: center;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+body.modo-escuro .perf-bloco-metrica.destaque {
+    background: var(--p-primaria) !important;
 }
 
-.perf-bloco-metrica:hover { 
-    transform: translateY(-10px); 
+body.modo-escuro .perf-nome-utilizador,
+body.modo-escuro .perf-dado-label,
+body.modo-escuro .perf-dado-valor,
+body.modo-escuro .perf-global-label,
+body.modo-escuro .perf-global-xp,
+body.modo-escuro .perf-bloco-metrica h3 {
+    color: #fff !important;
 }
 
-.perf-bloco-metrica h3 {
-    color: var(--p-primaria);
-    font-weight: 900;
-    font-style: italic;
-    font-size: 1.4rem;
-    text-transform: uppercase;
+body.modo-escuro .perf-info-box {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-color: #333 !important;
 }
 
-.perf-valor-num {
-    display: block;
-    font-size: 3rem;
-    font-weight: 900;
-    color: var(--p-acento);
-    margin-top: 1rem;
+body.modo-escuro .perf-info-linha {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
 }
-
-/*MENU  DE ACESSIBILIDADE*/
-.perf-area-ajuda {
-    position: fixed;
-    bottom: 2.5rem;
-    right: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    z-index: 200;
-}
-
-.perf-painel-opcoes {
-    background: var(--p-neve);
-    padding: 1.2rem;
-    border-radius: 25px;
-    width: 220px;
-    margin-bottom: 1rem;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    border: 1px solid #eee;
-}
-
-.perf-btn-opcao {
-    width: 100%;
-    text-align: left;
-    padding: 10px 15px;
-    margin: 4px 0;
-    border: none;
-    background: #f8f8f8;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 700;
-    color: var(--p-primaria);
-    transition: 0.2s;
-}
-
-.perf-btn-opcao:hover { 
-    background: var(--p-fundo); 
-}
-
-.perf-bolha-gatilho {
-    background: var(--p-vidro-limpo);
-    backdrop-filter: blur(10px);
-    padding: 0.6rem;
-    border-radius: 40px;
-    border: 1px solid white;
-    display: flex;
-    gap: 10px;
-}
-
-.perf-btn-redondo {
-    width: 42px; height: 42px;
-    background: white; border: none;
-    border-radius: 50%; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-}
-
-.perf-btn-redondo img { width: 22px; }
-
-.hidden { display: none !important; }
-
-/*FILTROS ACESSIBILIDADE*/
-.protanopia { filter: saturate(0.5) hue-rotate(-20deg); }
-.deuteranopia { filter: saturate(0.5) hue-rotate(-45deg); }
-.tritanopia { filter: hue-rotate(180deg); }
-.achromatopsia { filter: grayscale(1); }
-
-/* MODO ESCURO */
-.modo-escuro { 
-    background-color: #121212 !important; 
-    color: #eee !important; 
-}
-.modo-escuro .perf-cartao-id, 
-.modo-escuro .perf-bloco-metrica,
-.modo-escuro .perf-painel-opcoes { 
-    background: #1e1e1e; 
-    border-color: #333; 
-}
-.modo-escuro .perf-nome-utilizador,
-.modo-escuro .perf-dado-label,
-.modo-escuro .perf-dado-valor,
-.modo-escuro .perf-bloco-metrica h3,
-.modo-escuro .perf-btn-opcao {
-    color: #fff;
-}
-.modo-escuro .perf-btn-opcao { background: #2a2a2a; }

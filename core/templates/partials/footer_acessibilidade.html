@@ -1,0 +1,35 @@
+{% load static %}
+{% load i18n %}
+
+<footer class="footer-fixed">
+    <div id="daltonismo-menu" class="accessibility-menu hidden">
+        <h3 class="menu-title">{% trans "Acessibilidade" %}</h3>
+        <div class="menu-list">
+            <button onclick="setDaltonismo('normal')" class="menu-btn">{% trans "Padrão" %}</button>
+            <button onclick="setDaltonismo('protanopia')" class="menu-btn">{% trans "Protanopia" %}</button>
+            <button onclick="setDaltonismo('deuteranopia')" class="menu-btn">{% trans "Deuteranopia" %}</button>
+            <button onclick="setDaltonismo('tritanopia')" class="menu-btn">{% trans "Tritanopia" %}</button>
+            <button onclick="setDaltonismo('achromatopsia')" class="menu-btn">{% trans "P&B" %}</button>
+        </div>
+    </div>
+
+    <div id="contraste-menu" class="accessibility-menu hidden">
+        <h3 class="menu-title">{% trans "Contraste" %}</h3>
+        <div class="menu-list">
+            <button onclick="setContraste('normal')" class="menu-btn">{% trans "Padrão" %}</button>
+            <button onclick="setContraste('alto-contraste')" class="menu-btn">{% trans "Alto Contraste" %}</button>
+            <button onclick="setContraste('contraste-invertido')" class="menu-btn">{% trans "Invertido" %}</button>
+            <button onclick="setContraste('modo-escuro')" class="menu-btn">{% trans "Modo Escuro" %}</button>
+        </div>
+    </div>
+
+    <div class="accessibility-pill">
+        <span class="help-label">{% trans "PRECISAS DE AJUDA?" %}</span>
+        <button onclick="toggleDaltonismoMenu()" class="access-icon">
+            <img src="{% static 'users/images/daltonismo.png' %}" style="width:22px;" alt="Daltonismo">
+        </button>
+        <button onclick="toggleContrasteMenu()" class="access-icon">
+            <img src="{% static 'users/images/contraste.png' %}" style="width:22px;" alt="Contraste">
+        </button>
+    </div>
+</footer>

@@ -18,8 +18,13 @@ body.view-autenticacao {
   font-family: "Inter", sans-serif;
   min-height: 100vh;
   display: flex;
-  transition: filter 0.3s ease;
   overflow-x: hidden;
+}
+
+#content-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  transition: filter 0.3s ease;
 }
 
 .header-navegacao-login {
@@ -27,7 +32,7 @@ body.view-autenticacao {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 2rem; 
+  padding: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +64,7 @@ body.view-autenticacao {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--vidro-fosco); 
+  background: var(--vidro-fosco);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 0.75rem 1.5rem;
@@ -313,14 +318,14 @@ body.view-autenticacao {
 }
 
 .notificacao-erro {
-    background: rgba(255, 77, 77, 0.2); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 1rem;
-    border-radius: 1.2rem;
-    margin-bottom: 1.5rem;
-    animation: abanar 0.4s ease-in-out; 
+  background: rgba(255, 77, 77, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem;
+  border-radius: 1.2rem;
+  margin-bottom: 1.5rem;
+  animation: abanar 0.4s ease-in-out;
 }
 
 .navegacao-secundaria {
@@ -343,114 +348,40 @@ body.view-autenticacao {
   text-decoration: underline;
 }
 
-/* ACESSIBILIDADE*/
-.painel-acessibilidade-fixo {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: 999;
-}
-
-.bolha-opcoes {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 8px 15px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.botao-circular-acesso {
-  border: none;
-  background: #f0f0f0;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s;
-}
-.botao-circular-acesso:hover {
-  background: #e0e0e0;
-}
-.botao-circular-acesso img {
-  width: 20px;
-}
-
-.menu-suspenso {
-  background: white;
-  padding: 1rem;
-  border-radius: 1.5rem;
-  width: 200px;
-  margin-bottom: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
 .mensagem-alerta {
-    color: #ffffff;
-    font-weight: 700;
-    font-style: italic;
-    font-size: 0.9rem;
-    text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 @keyframes abanar {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
-.btn-escolha {
-  width: 100%;
-  text-align: left;
-  padding: 10px 15px;
-  border: none;
-  background: #f8f9fa;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  color: var(--floresta-profunda);
-  font-size: 0.9rem;
-}
-.btn-escolha:hover {
-  background: var(--base-menta);
-}
-
-.hidden {
-  display: none !important;
-}
-
-.protanopia {
-  filter: saturate(0.5) hue-rotate(-20deg);
-}
-.deuteranopia {
-  filter: saturate(0.5) hue-rotate(-45deg);
-}
-.tritanopia {
-  filter: hue-rotate(180deg) saturate(0.8);
-}
-.achromatopsia {
-  filter: grayscale(1);
-}
-.alto-contraste {
-  filter: contrast(180%) brightness(110%);
-}
-.modo-escuro {
+body.modo-escuro .wrapper-split {
   background-color: #1a1a1a !important;
+}
+body.modo-escuro .ala-principal-direita {
+  background-color: #2c2c2c !important;
+}
+body.modo-escuro .cabecalho-form,
+body.modo-escuro .logotipo-superior .nome-marca-estilizado,
+body.modo-escuro .btn-exit-login {
   color: white !important;
 }
-.modo-escuro .ala-principal-direita {
-  background-color: #2c2c2c;
+body.modo-escuro .btn-exit-login {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 @media (max-width: 480px) {
@@ -460,4 +391,22 @@ body.view-autenticacao {
   .logotipo-superior .nome-marca-estilizado {
     display: none;
   }
+}
+
+/*isto e para o editar perfil que herda o css do login*/
+.agrupamento-input input {
+  width: 100%;
+  background-color: var(--vidro-fosco);
+  border: 2px solid transparent;
+  border-radius: 1.2rem;
+  padding: 1.1rem 1.4rem;
+  color: var(--neve);
+  outline: none;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+.agrupamento-input input:focus {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-color: var(--neve);
+  transform: translateY(-2px);
 }
