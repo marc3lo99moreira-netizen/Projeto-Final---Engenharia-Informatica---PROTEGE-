@@ -15,7 +15,12 @@ from django_otp import user_has_device
 import json
 from django.db.models import Count, Q
 from atividades.models import HistoricoQuiz 
-from users.models import Perfil
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django_otp.plugins.otp_totp.models import TOTPDevice
+
+
 print("TESTE DEBUG: O ficheiro views foi carregado com sucesso!")
 
 @login_required
@@ -62,15 +67,6 @@ def perfil(request):
 
 def home(request):
     return render(request, 'users/home.html')
-
-
-
-from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from django.utils import translation
-
-from django_otp import user_has_device 
 
 
 
@@ -252,10 +248,6 @@ def atualizar_avatar(request):
 
     return redirect('perfil')
 
-from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django_otp.plugins.otp_totp.models import TOTPDevice
 
 @login_required
 def desativar_mfa_seguro(request):
