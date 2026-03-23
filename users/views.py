@@ -12,11 +12,52 @@ from .forms import EditarPerfilForm
 from django.db import transaction 
 from django.utils import translation
 from django_otp import user_has_device
+import json
+from django.db.models import Count, Q
+from atividades.models import HistoricoQuiz 
+from users.models import Perfil
 
 
 @login_required
 def perfil(request):
-    return render(request, 'users/perfil.html')
+    perfil_user = request.user.perfil
+    erros_por_tema = HistoricoQuiz.objects.filter(
+        resultado_quiz__perfil=perfil_user,
+        foi_correta=False
+    ).values('pergunta__tema').annotate(total_erros=Count('id'))
+
+    # Preparar as listas para o JavaScript
+    labels = []
+    dados = []
+
+    #variaveis para poder mostrar a posiçao do utilizador na leaderboard
+    #se tiver no top 3
+    rank_geral = Perfil.objects.filter(Q(nivel_geral__gt=perfil_user.nivel_geral) | Q(nivel_geral = perfil_user.nivel_geral, xp_geral__gt=perfil_user.xp_geral)).count()+1
+
+    rank_quiz = Perfil.objects.filter(Q(nivel_quiz__gt=perfil_user.nivel_quiz) | Q(nivel_quiz = perfil_user.nivel_quiz, pontuacao_total_quiz__gt=perfil_user.pontuacao_total_quiz)).count()+1
+
+    rank_simulador = Perfil.objects.filter(Q(nivel_simulador__gt=perfil_user.nivel_simulador) | Q(nivel_simulador = perfil_user.nivel_simulador, pontuacao_total_simulador__gt=perfil_user.pontuacao_total_simulador)).count()+1
+
+
+    
+
+    for item in erros_por_tema:
+        labels.append(item['pergunta__tema'].capitalize())
+        dados.append(item['total_erros'])
+
+    # Se o utilizador não tiver erros nenhuns, pomos dados fictícios ou vazios
+    if not labels:
+        labels = ['Phishing', 'Senhas', 'Malware', 'Redes']
+        dados = [0, 0, 0, 0]
+
+    context = {
+        'labels_grafico': json.dumps(labels), # Passa para JSON string
+        'dados_grafico': json.dumps(dados),   # Passa para JSON string
+        'rank_geral':rank_geral,
+        'rank_quiz':rank_quiz,
+        'rank_simulador':rank_simulador,
+    }
+    return render(request, 'users/perfil.html', context)
 
 
 def home(request):
@@ -191,3 +232,53 @@ def editar_perfil(request):
         form = EditarPerfilForm(instance=perfil)
     
     return render(request, 'users/editar_perfil.html', {'form': form})
+
+@login_required
+def atualizar_avatar(request):
+    if request.method == 'POST':
+        perfil = request.user.perfil
+        
+        #Se o utilizador carregou uma foto própria
+        if 'avatar_custom' in request.FILES and request.FILES['avatar_custom']:
+            perfil.avatar = request.FILES['avatar_custom']
+            perfil.save()
+            
+        #Se o utilizador escolheu uma foto da grelha
+        elif 'avatar_padrao' in request.POST:
+            perfil.avatar = None 
+            perfil.avatar_padrao = request.POST['avatar_padrao'] 
+            perfil.save()
+            
+
+    return redirect('perfil')
+
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django_otp.plugins.otp_totp.models import TOTPDevice
+
+@login_required
+def desativar_mfa_seguro(request):
+    if request.method == 'POST':
+        token_inserido = request.POST.get('mfa_code')
+        
+        # Vai buscar o dispositivo MFA ativo deste utilizador
+        device = TOTPDevice.objects.filter(user=request.user, confirmed=True).first()
+        
+        # Verifica se o dispositivo existe e se o código inserido é o correto
+        if device and device.verify_token(token_inserido):
+            #Apaga o MFA do utilizador
+            device.delete()
+            
+            request.user.staticdevice_set.all().delete()
+            
+            messages.success(request, "MFA desativado com segurança.")
+        else:
+            # CÓDIGO ERRADO: Bloqueia a ação
+            messages.error(request, "Código incorreto! O MFA não foi desativado.")
+            
+    # Redireciona de volta para a tua página de segurança 
+    return redirect('two_factor:profile')
+
+
+

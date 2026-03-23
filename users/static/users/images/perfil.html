@@ -34,7 +34,7 @@
                     {% elif user.socialaccount_set.all %}
                         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" alt="Avatar do Google" referrerpolicy="no-referrer">
                     {% else %}
-                        <img src="{% static 'users/images/' %}{{ user.perfil.avatar_padrao }}" alt="Avatar Padrão">
+                        <img src="{% static 'users/images/avatar_perfil.png' %}" alt="Avatar Padrão">
                     {% endif %}
 
                     <button type="button" class="perf-avatar-edit-btn" onclick="abrirModalAvatar()" title="{% trans 'Mudar Foto' %}">
@@ -52,15 +52,15 @@
                             
                             <div class="avatar-grid">
                                 <label class="avatar-option">
-                                    <input type="radio" name="avatar_padrao" value="avatar.png">
+                                    <input type="radio" name="avatar_padrao" value="avatar1.png">
                                     <img src="{% static 'users/images/avatar.png' %}" alt="Padrão 1">
                                 </label>
                                 <label class="avatar-option">
-                                    <input type="radio" name="avatar_padrao" value="garoto.png">
+                                    <input type="radio" name="avatar_padrao" value="avatar2.png">
                                     <img src="{% static 'users/images/garoto.png' %}" alt="Padrão 2">
                                 </label>
                                 <label class="avatar-option">
-                                    <input type="radio" name="avatar_padrao" value="bruxa.png">
+                                    <input type="radio" name="avatar_padrao" value="avatar3.png">
                                     <img src="{% static 'users/images/bruxa.png' %}" alt="Padrão 3">
                                 </label>
                             </div>
@@ -84,34 +84,6 @@
                 
                 <h2 class="perf-nome-utilizador">{{ user.username }}</h2>
                 <span class="perf-email-pill">{{ user.email }}</span>
-
-                <div class="perf-medalhas-container">
-                    
-                    {% if rank_geral <= 3 %}
-                        <div class="perf-medalha {% if rank_geral == 1 %}m-ouro{% elif rank_geral == 2 %}m-prata{% else %}m-bronze{% endif %}">
-                            {% if rank_geral == 1 %}🥇 1º Geral
-                            {% elif rank_geral == 2 %}🥈 2º Geral
-                            {% else %}🥉 3º Geral{% endif %}
-                        </div>
-                    {% endif %}
-
-                    {% if rank_quiz <= 3 %}
-                        <div class="perf-medalha {% if rank_quiz == 1 %}m-ouro{% elif rank_quiz == 2 %}m-prata{% else %}m-bronze{% endif %}">
-                            {% if rank_quiz == 1 %}🥇 1º Quiz
-                            {% elif rank_quiz == 2 %}🥈 2º Quiz
-                            {% else %}🥉 3º Quiz{% endif %}
-                        </div>
-                    {% endif %}
-
-                    {% if rank_simulador <= 3 %}
-                        <div class="perf-medalha {% if rank_simulador == 1 %}m-ouro{% elif rank_simulador == 2 %}m-prata{% else %}m-bronze{% endif %}">
-                            {% if rank_simulador == 1 %}🥇 1º Simulador
-                            {% elif rank_simulador == 2 %}🥈 2º Simulador
-                            {% else %}🥉 3º Simulador{% endif %}
-                        </div>
-                    {% endif %}
-                    
-                </div>
 
                 <div class="perf-info-box">
                     <div class="perf-info-linha">
