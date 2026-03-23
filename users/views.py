@@ -16,7 +16,7 @@ import json
 from django.db.models import Count, Q
 from atividades.models import HistoricoQuiz 
 from users.models import Perfil
-
+print("TESTE DEBUG: O ficheiro views foi carregado com sucesso!")
 
 @login_required
 def perfil(request):

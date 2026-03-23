@@ -38,13 +38,14 @@ class Perfil(models.Model):
     nivel_simulador = models.IntegerField(default=1)
     simuladores_realizados = models.PositiveIntegerField(default=0)
     pontuacao_total_simulador = models.IntegerField(default=0)
-    
+    soma_percentagens_simulador = models.FloatField(default=0.0)
     filtro_daltonismo = models.CharField(max_length=20, choices=OPCOES_DALTONISMO, default='normal')
     filtro_contraste = models.CharField(max_length=20, choices=CONTRASTE_CHOICES, default='normal')
     lingua = models.CharField(max_length=20, choices=LINGUA_CHOICES, default='pt')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar_padrao = models.CharField(max_length=100, default='avatar_perfil.png')
     @property
     def precisao_media(self):
         if self.quizzes_realizados == 0:
@@ -53,6 +54,12 @@ class Perfil(models.Model):
 
     def __str__(self):
         return f"Perfil de {self.user.username}"
+    
+    @property
+    def precisao_media_simulador(self):
+        if self.simuladores_realizados == 0:
+            return 0
+        return round(self.soma_percentagens_simulador / self.simuladores_realizados, 1)
     
     @receiver(user_logged_in)
     def sincronizar_lingua_pos_login(sender, request, user, **kwargs):
