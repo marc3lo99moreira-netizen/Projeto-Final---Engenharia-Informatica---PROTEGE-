@@ -123,8 +123,13 @@ WSGI_APPLICATION = 'core.wsgi.application'
 database_url = os.environ.get('DATABASE_URL')
 
 if database_url:
+    # Configuração para o Render + Neon (PostgreSQL)
     DATABASES = {
-        'default': dj_database_url.config(default=database_url, conn_max_age=600)
+        'default': dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            ssl_require=True  #o neon exige  o ssl
+        )
     }
 else:
     # Caso não encontre (localmente), usa o MySQL padrão
@@ -136,6 +141,9 @@ else:
             'PASSWORD': 'Marcelo123',
             'HOST': '127.0.0.1',
             'PORT': '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
         }
     }
 
